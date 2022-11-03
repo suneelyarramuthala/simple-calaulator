@@ -18,12 +18,15 @@ var clear = document.querySelector("#clear");
 var mc = document.querySelector("#mc");
 var backspace = document.querySelector("#backspace");
 var equalto = document.querySelector("#equalto");
+var update_h = document.querySelector("#update_h");
+var clear_h = document.querySelector("#clear_h");
 
 var text = document.querySelector("#text");
-var history = document.querySelector("#history");
+var hh = document.querySelector("#hh");
 
 var equation = "";
 var allHistory = "";
+var his_arr = [];
 
 one.addEventListener("click", addone);
 two.addEventListener("click", addtwo);
@@ -35,6 +38,9 @@ seven.addEventListener("click", addseven);
 eight.addEventListener("click", addeight);
 nine.addEventListener("click", addnine);
 zero.addEventListener("click", addzero);
+fullstop.addEventListener("click", addfullstop);
+hash.addEventListener("click", hashtag);
+mc.addEventListener("click", creator);
 
 plus.addEventListener("click", addplus);
 minus.addEventListener("click", addminus);
@@ -45,6 +51,8 @@ equalto.addEventListener("click", evaluate);
 
 clear.addEventListener("click", clearfield);
 backspace.addEventListener("click", removeLastElement);
+update_h.addEventListener("click", update_history);
+clear_h.addEventListener("click", clear_history);
 
 function addone() {
   equation = equation + "1";
@@ -99,7 +107,11 @@ function adddivide() {
   text.innerHTML = equation;
 }
 function addmultiply() {
-  equation = equation + " x ";
+  equation = equation + " * ";
+  text.innerHTML = equation;
+}
+function addfullstop() {
+  equation = equation + ".";
   text.innerHTML = equation;
 }
 function clearfield() {
@@ -117,9 +129,42 @@ function removeLastElement() {
   }
 }
 function evaluate() {
-  console.log(equation);
-  console.log(allHistory);
-  allHistory = allHistory + "</br>" + equation;
-  console.log(allHistory);
-  history.innerHTML = allHistory;
+  localStorage.setItem("equation", equation);
+  var newequation = localStorage.getItem("equation");
+  localStorage.setItem(newequation, equation);
+  equation = eval(equation).toString();
+  text.innerHTML = equation;
+  console.log(localStorage.lenth);
+}
+for (let i = 0; i < localStorage.length; i++) {
+  let key = localStorage.key(i);
+  let value = localStorage.getItem(key);
+  if (key === "equation") {
+    continue;
+  }
+  console.log(key, value);
+  allHistory += value + "<br>";
+}
+if (allHistory === "") {
+  hh.innerHTML = "0";
+} else {
+  hh.innerHTML = allHistory;
+}
+function update_history() {
+  location.reload();
+}
+function clear_history() {
+  localStorage.clear();
+  location.reload();
+}
+function hashtag() {
+  var msg1 = "#cool calculator" + ",   ";
+  var msg2 = "just kidding no functionality to the hash tag yet" + ",    ";
+  var msg3 = "maybe in future" + ".";
+  var msg = msg1 + msg2 + msg3;
+  alert(msg);
+}
+function creator() {
+  var msg = "created by " + " Yarramuthala Suneel Kumar   ";
+  alert(msg);
 }
