@@ -130,11 +130,13 @@ function removeLastElement() {
 }
 function evaluate() {
   localStorage.setItem("equation", equation);
+  var aftereval = eval(equation).toString();
+  var botheqations = equation + "---------" + aftereval;
   var newequation = localStorage.getItem("equation");
-  localStorage.setItem(newequation, equation);
+  localStorage.setItem(newequation, botheqations);
   equation = eval(equation).toString();
   text.innerHTML = equation;
-  console.log(localStorage.lenth);
+  console.log(newequation);
 }
 for (let i = 0; i < localStorage.length; i++) {
   let key = localStorage.key(i);
@@ -142,7 +144,6 @@ for (let i = 0; i < localStorage.length; i++) {
   if (key === "equation") {
     continue;
   }
-  console.log(key, value);
   allHistory += value + "<br>";
 }
 if (allHistory === "") {
